@@ -1,6 +1,9 @@
+import { getSession } from '@/lib/session';
 import Link from 'next/link';
+import SignInPanel from './signInPanel';
 
 const Navbar = async () => {
+  const session = await getSession();
   return (
     <>
       <h1 className="text-2xl font-bold p-2">Midnight Syntax</h1>
@@ -14,6 +17,11 @@ const Navbar = async () => {
         <Link href="#contact" className="">
           Contact
         </Link>
+        {session && session.user ? (
+          <a href={'/api/auth/signout'}>Sign Out</a>
+        ) : (
+          <SignInPanel />
+        )}
       </div>
     </>
   );
